@@ -1,0 +1,372 @@
+-----------------------------------------------------------------------------
+Tehnike istrazivanja podatka : 
+1) Deskriptivne(Klasterovanje, ekplorativna analiza)
+2) Prediktivne(Klasifikacija, regresija, rangiranje)
+Tipican proces :
+1) Definisanje problema
+2) Definisanje podataka
+3) Ekplorativna analiza
+4) Istrazivanje podataka
+5) Upotreba modela
+6) Model u upotrebi
+Sumarne statistike :
+Srednja vrednost = centar podataka
+Mod = vrednost atributa koja se najcesce pojavljuje
+Varijansa = rasutost podataka
+Iskrivljenost = pokazatelj asimetrije
+Medijan = 50% svih vrednosti su ispod
+Sredjna vrednost je osetljiva na outlier-e.
+3 igraca ponela 250, 1 igrac poneo 500
+Medijan = 250, Srednja vrednost = (1250/4)
+Opseg je razlika izmedju max i min.
+Varijansa i standardna devijacija su najcesce mere rasipanja skupa tacaka.
+Frekvencija vrednosti atributa je procenat pojavljivanja vrednosti u skupu podataka.
+Histogrami prikazuju distribuciju vrednosti jedne varijable. Opseg vrednosti
+se podeli u intervale i prikazuje se broj objekata cija vrednost atributa updata u interval.
+Broj intervala je znacajan za vizualizaciju. Najcesce su namenjeni za analizu jedne 
+promenljive ali mogu da se ubace kategorije kao boje.
+
+U fazi eksplorativne analize zelimo da saznamo da li neka promenljiva X moze
+da bude korisna za predikciju Y.
+Kovarijansa meri kako X i Y variraju zajedno.
+Korelacija = skalirana varijansa
+Koeficijent korelacije meri linearni odnos
+Sumarne statistike su korisne ali ne smeju biti jedino sredstvo za esplorativnu analizu.
+Ne postoji adekvatna zamena za grafike.
+Outlier = tacka koja se znacajno razlikuje od ostalih tacaka.
+Metoda najmanjih kvadrata (regresija) je osetljiva na outliere.
+
+-----------------------------------------------------------------------------
+
+Klaster analiza je nalazenje grupe objekata takvih da su objekti iz grupe medjusobno
+slicni i da su razliciti od objekata u drugim grupama. 
+Klasterovanje je nenadgledano ucenje. Klastering je skup klastera.
+2 nacina klasterovanja :
+1) Hijerarhijski (Skup ugnjezdenih klastera organizovanih kao hijerarhijsko stablo)
+2) Partitivni (Podela objekata u nepreklapajuce podskuppkove takve da je
+svaki obejkat u tacno jednom podskupu)
+Kod ne-eskluzivnih klastera tacke mogu da spadaju u vise klastera.
+Kod fazi klastera tacka pripada svakom klasteru sa nekom vrednoscu izmedju 0 i 1.
+U nekim slucajevima zelimo da klasterizujemo deo podataka.
+Tipovi klastera:
+1) Dobro razdvojeni klasteri
+2) Klasteri bazirani na centru
+3) Kontinualni klasteri
+4) Klasteri bazirani na gustini
+5) Konceptualni klasteri ili klasteri po osobini
+6) Opisani kriterijumskom funkcijom
+Centar klastera je cesto centroid - prosek svih tacaka u klasteru
+ili medoid - "najreprezentativnija" tacka klastera
+Algoritmi za klasterovanje:
+1) K-sredine i njegove varijacije (KMeans)
+2) Hijerarhijsko klasterovanje
+3) Klasterovanje bazirano na gustini
+Resenje problema inicijalnih centroida kod K-sredina:
+1) Vistestruko izvrsavanje
+2) Koriscenje hijerarhijskog klasteringa za odredjivanje inicjalnih centroida
+3) Generisanje vise od k inicijalnih centroida i zatim izbor medju tim centroidima
+3) Post procesing (spajanje ili razbijanje dobijenih klastera)
+4) Bisekcija k-sredina
+K-sredina++ prvi centroid se postavi na random mesto a svaki sledeci na sto dalju lokaciju.
+Ocena klastera k-sredina se najcesce radi SSE (suma udaljenosti tacaka od klastera).
+Nacin za odredjivanje broja klastera:
+1) Vizualizacija preko grafa
+2) Nagli prelaz u grafiku SSE po broju klastera
+3) Gap statistic (Zasniva se na razlici disperzije klastera dobijenih pomocu kmeans
+za dati skup podataka i disperzije slucajno generisanih skupova podataka)
+Inkrementalno azuriranje centroida je kada se centroid azurira nakon svake dodele tacke 
+umesto da se azurira na kraju svake iteracije. To uvodi zavisnost od redosleda.
+Pred procesiranje = normalizacija podataka + elimacina stranih podataka
+Post procesiranje = eliminacija malih klastera, spajanje bliskih klastera, razbijanje losih klastera
+K-Sredina sa bisekcijom moze da proizvede partitivni ili hijerarhijski klastera
+K-Sredina ima problem kada se razlikuju klasteri velicina, gustina, nesfericni oblici.
+Hijerarhijsko klasterovanje kao rezultat daje skup ugnjezdenih klastera organizovanih kao 
+hijerarhijsko stablo. Vizualizuje se kao dendogram. Prednost hijearhijskog klasteringa
+nije potrebno pretpostaviti broj klastera i mogu da odgovaraju smislenoj taksonomiji.
+2 osnovna tipa:
+1) Aglomerativno (Pocinje se sa tackama kao pojedinacim klasterima i onda se spajaju)
+2) Diviziono (Zapocinje se sa jednim klasterom koji sadrzi sve tacke i u svakom koraku se deli.)
+Kljucna operacija je sracunavanje blizine 2 klastera i za to se koristi matrica blizine.
+Definisanje slicnosti medju klasterima : MIN, MAX, grupni presek, rastojanje medju centroidima.
+Slicnost klastera MIN bazirana je na dvema najblizim tackama u razlicitim klasterima.
+Slicnost klastera MAX bazirana je na dve naudaljenije tacke u dva razlicita klastera.
+Slicnost klastera Grupni presek : blizina dva klastera je sredjnja vrednost blizina parova tacaka.
+Slicnost klastera Wardov metod : slicnost dva klastera bazirana na smanjuju kvadrat greske
+pri spajanju dva klastera. Spajaju se klasteri koji ce dovesti do najmanjeg povecanja greske.
+Kada se jednom odluci na kombinovanje dva klastera ta odluka se ne moze opozvati.
+
+DBSCAN je algoritam baziran na gustini. Gustina = broj tacaka unutar zadatog precnika.
+Tacka je tacka jezgra ako ima vise od specificranog broja tacaka unutar Eps.
+Ivicna tacka ima manje od minPts tacaka na rastojanju eps ali je susedna sa tackom jezgra.
+Tacka suma je svaka tacka koja nije ni tacka jezgra ni ivicna tacka. Ovaj algoritam
+eliminise sum i moze da radi sa klasterima razlicitih oblika i velicina. Ne radi 
+dobro kada gustina varira i kada su podaci visoko dimenzionirani.
+Numericke mere koje se primenjuju da bi se prosudili raziciti aspekti validnosti klasteringa
+se svrstavaju u sledece kategorije :
+1) Eksterni indeks (Meri stepen slaganja dobijenih oznaka klasa sa oznakama klasa koje su eksterno date) Entropija
+2) Interni indeks (Meri kvalitet strukture klasteringa bez koriscenja eksternih informacija) SSE
+3) Relativni indeks (Poredi razlicita klasterovanja ili klastere)
+U interni indeks spadaju kohezija (Suma tezina svih linkova u klasteru) i separacija klastera(
+suma svih tezina izmedju cvorova u klasteru i cvorova van klastera) i koeficijent siluete(predstavlja
+kombinaciju ideje kohezije i separacije za pojedinacne tacke)
+
+-----------------------------------------------------------------------------
+
+EM - Expectation maximization
+Razlike u odnosu na KMeans algoritam :
+1) Elipsoidni klasteri umesto sfernih
+2) "Meko" dodeljivanje tacke klasterima
+KMeans je pojednostavljen slucaj EM klasterovanja.
+2 Koraka : 
+1) Izracunavanje verovatnoce pripadanja svake tacke svakom klasteru
+2) Izracunavanje parametara klastera pomocu maximum likelihood.
+Verovatnocu pripadanja tacke klasteru racunamo pomocu gausijane.
+Svaka iteracija EM algoritma povecava likelihood, iteriramo ka konvergenciji
+ali ka lokalnom optimumu.
+Inicijalne parametre biramo na slucajan nacin.
+EM je generalni pristup za obucavanje modale kada nisu data klasna obelezja.
+
+-----------------------------------------------------------------------------
+
+Klasifikacija je automatsko mapiranje podataka na skup klasa, gde su klase fiksirane
+i date unapred. Klasifikacija je nadgledano ucenje
+U stablu odlucivanja postoji jedan koren cije grane vode u razlicita podstabla koja 
+takodje mogu imati podstabla dok ne zavrse u listovima.
+Huntov algoritam sluzi za generisanje stabla odlucivanja. Grane delimo sve dok ne postanu ciste.
+Specificiranje test uslova zavisi od tipa atributa : Nominalni, Ordinalni, Kontinualni.
+Zavisi od broja nacina razdvajanja : Binarno i visestrano razdvajanje.
+Visestrano razdvajanje formira onoliko particija koliko ima razlicitih vrednosti atributa.
+Binarno razdvajanje formira dva podskupa. Potrebno je odrediti optimalno particionisanje.
+Razdvajanje po kontinualnim atributima : 
+Diskretizacija za formiranje kategorijalnog atributa (staticka i dinamicka)
+Binarno odlucivanje
+Odrediti najbolje razdvajanje : preferiraju se cvorovi sa niskim stepenom necistoce(9:1)
+Mere necistoce cvora : 
+Gini indeks (Max kada su elementi uniformi raspodoljeni, Min kada svi elementi pripadaju istoj klasi)
+Entropija (Slicno kao gini samo sto koristi teoriju informacija)
+Greska pogresne klasifikacije
+InformationGain daje cistu ali beskonacnu podelu.
+GiniRatio daje manje homogenu ali korisnu podelu.
+Kriterijumi zaustavljanja za indukciju stabla:
+1) Prestati sa razvojem cvora kada svi elementi pripadaju istoj klasi
+2) Prestati sa razvojem cvora kada svi elementi imaju slicne vrednosti atributa
+Underfiting se odnosi na fenomen kod koga klasifikator na obucavajucem skupu ne daje zadate
+rezultate klasifikacije.
+Overfiting se odnosi na fenomen kada klasifikator slepo sledi obucavajuci skup.
+Procena greske generalizacije:
+1) Greska u obucavanju
+2) Greska u testiranju
+Optimisticki pristup da su te dve greske jednake.
+Pesimisticki pristup dodaje i broj cvorora u formulu. (Sto vise cvorova to je veca greska)
+Overfiting mozemo tretirati pre-pruningom, odnosno zaustavljanjem algoritma
+razdvajanja stabla pre potpunog razvoja.( Kada su sve instance iz iste klase,
+kada su sve vrednosti atributa iste, kada razvoj tekuceg cvora ne poboljsava
+meru necistoce, ukoliko je broj instanci manji od unapred zadate vrednosti...)
+Post-pruning, razviti stablo do kraja i onda poceti sa trimovanjem.
+Ukoliko greska postane manja nakon trimovanja, zameniti podstablo cvorom.
+Evaluacija stabla odlucivanja osnovna ideja pri evaluaciji je da se stablo
+evaluira na nepoznatim podacima, tj onima koji nisu koristeni u skupu podataka 
+pomocu kojih je formirano.
+Unakrsna validacija sluzi za to, radi na principu da pocetni skup podataka
+deli u vise manjih i neke od njih koristi za obucavanje a na ostatku izvrsi
+evaluacija. Deljenje osnovnog skupa je iterativno, na vise razlicitih nacina se deli.
+Matrica konfuzije sluzi za evaluciju performannsi gde je fokus na prediktivne sposobnosti modela.
+Tacnost, preciznost (U imeniocu TP + FP), recall. (Razlikuju se u imeniocu, reacall u imeniocu ima TP + TN)
+Za razliku od tacnosti koja predstavlja globalnu meru performansi klasifikatora bez obzira
+koliko klasa ima, preciznost i odziv su vezane za konkretnu klasu i odredjuju se zasebno za svaku klasu.
+Matrica toska pogresne klasifikacije. Trosak i tacnost ne moraju biti u srazmeri.
+
+-----------------------------------------------------------------------------
+
+Klasifikatori bazirani na instancama skladiste obucavajuci skup. Memorise ceo obucavajuci
+skup i klasifikaciju vrsi samo ako postoji tacno slaganje vrednosti atributa novog objekta
+i nekog od objekata u obucavajucem skupu.
+Klasifikator najblizem komsiji, trebaju mu tri stvari : 
+1) Skup skladistenih objekata
+2) Metrika kojom meri rastojanje medju objketima
+3) Vrednost k, broj najblizih komsija koje ce da nadje
+Voronoiev dijagram je t posebna dekompozicija metrickog prostora u ravne koje sadrze samo
+jednu tacku (sajt) iz skupa podataka. Svakom sajtu odgovara jedna voronoieva celija. 
+Voronoievi cvorovi su tacke koje su na istom rastojanju od tri ili vise sajtova.
+Euklidsko rastojanje se koristi za odredjivanje najblizih suseda. Problemi sa euklidskom
+merom : Problem dimenzionalnosti, moze da prozivede neadekvatne rezultate.
+k-nn klasifikacija je relativno skupa, moramo iterirati kroz sve instance, 
+nekada nije lako odrediti k. Prednosti su :
+jednostavna implementacija, ne zahteva ucenje, moze da modeluje kompleksne odnose
+izmedju podataka i klasa, ne dolazi do gubitka informacija prilikom formiranja modela,
+ima dobre performanse ako nema puno podataka u obucavajucem skupu.
+
+Bayes-ovski klasifikator je baziran na bayesovoj teoremi verovatnoce.
+Verovatnoca sa meningitisom. Posmatrajmo svaki atribut i oznaku
+klase kao slucajnu promenljivu, dat je objekat sa atribituma i cilj je predvideti klasu.
+Posebno zelimo da nadjemo vrednost C koja maskimizira P(C| A1, A2...)
+Ukoliko ne uvodimo naivnu pretpostavku treba nam nerealno mnogo informacija da bi sracunali
+rezultat. Naivna pretpostavka je da postoji nezavisnost atributa Ai za zadatu klasu.
+Kontinualne varijable je potrebno diskretizovati na intervale. Izbor strategije diskretizacije
+utice na verovatnoce. Druga mogucnost je estimacija gustine verovatnoce, pretpostavka
+je da atributi slede normalnu raspodelu. Iz podataka odrediti parametre raspodele, kada je poznata
+raspodela onda se moze iskoristi za odredjivanje uslovne verovatnoce. Kod bayesovskih klasifikatora
+se koristi laplasova korekcija za fixovanje kada je jedan od izraza nula. Naivni bayesovski klasifikator
+je robustan na sum, nedostajuce vrednosti tretira ignorisanjem instance u fazi sracunavanja, robustan
+na irelevantne atribute i pretpostavka o nezavisnosti ne mora da vazi za sve atribute.
+
+SVM nastale u rusiji, kasnije prenesena u ameriku. Nastale iz teorije o fundamentalnom ucenju.
+SVM je linearni klasifikator koji automatski nalazi granicu separacije izmedju dve klase.
+Verovatno najbolji klasifikatori za klasifikaciju teksta. Najcesce se koriste kada imamo 
+numericke podatke ili 2 klase. Mogu se lako prosiriti na vise klasa i na nenumericke podatke.
+Cilj je naci optimalnu granicu separcije. Maksimizirati udaljenost izmedju klasa.
+Algoritam pronalazi vektore potpore i koristi ih za linearnu klasifikaciju novih primera.
+Kernel funkcija nam pomaze da transformisem podatke u drugi prostor u kome su linearno 
+separabilni. Obicno je taj prostor mnogo vece dimenzionalnosti. Mnogo racunanja ima
+prilikom prebacivanja u drugi prostor, zato se koristi kernel trik. SVM radi dobro samo u 
+prostoru realnih vrednosti, ako koristimo kategorije onda moramo prvo izvrsiti konverziju.
+Hiper ravan koju daje SVM je nesto sto ljudi tesko razumeju.
+
+Bias je ocekivana vrednost greske. Previse veliki bias znaci underfiting, previse mali
+bias znaci overfiting. Varijansa odstupanje predikcije od svoje srednje vrednosti.
+Ako su klasifikatori slicni onda im je varijansa slicna.
+Povecavanjem k kod KNN algoritma smanjujemo varijansu ali povecavamo bias. Taj problem
+se u oblasti masinskog ucenja zove bias vs variance tradeoff. 
+Za mali obucavajuci skup najbolje radi naivni bajes jer on ima veliki bias i malu varijansu.
+Kako broj podataka raste KNN daje bolje performanse, on ima mali bias a veliku varijansu koja
+opada sa povecanjem data skupa.
+SVM moze biti dobar izbor u oba slucajaj je se optimazacijom parametara moze ponasati i kao
+NB i kao KNN.
+
+-----------------------------------------------------------------------------
+
+Ako upotrebite vecinsko glasanje lekara onda je to bagging, ako je misljenje nekih lekara
+bitnije onda je to boosting.
+Ansambl je niz klasifikatora konstruisanih pomocu obucavajuceg skupa.
+Kod ansambla klasifikatora se radi manipulisanje obucavajucim skupom (kreira se niz 
+obucavajucih skupova uzorkovanjem pocetnog skupa, moze se menjati nacin uzorkovanja),
+skupom atributa (biramo niz podskupova osobina, pomocu svakog od njih kreiramo poseban
+klasifikator, podskupovi se mogu birati slucajno ili konsultovanjem domenskih eskperata),
+oznakom klasa (moguce kada je broj klasa dovoljno veliki, skup klasa se deli na binarne
+i za svaki od njih se kreira klasifikator), algoritma masinskog ucenja (odredjeni algoritmi
+mogu da se promenama parametara promeniti tako da primenama na isti ob. skup proizvedu
+razlicite klasifikatore).
+Ansambli se mogu obucavati sekvencijalno i paralelno. Ansambli bolje rade sa nestabilnim
+klasifikatorima, to su oni koji za male promene na ulazu daju velike promene na izlazu.
+Ansambli rade zato sto mnoze greske koje su manje od 1 i time smanjuju ukupnu gresku.
+Pretpostavka je da su klasifikatori nezavisni.
+
+Kod bagginga vrsimo uniformno uzorkovanje ob. skupa. Od svakog dela dobijenog uzorkovanjem
+kreiramo poseban klasifikator. u proseku 63% originalnog skupa ide u obucavajuci a 37% u test
+skup. Bagging povecava tacnost tako sto smanjuje varijansu klasifikatora iz ansambla.
+
+Boosting je iterativni postupak kod koga se novi delovi obucavajuceg skupa dobijaju fokusiranjem
+na primere koji su u prethodnim iteracijama bili pogresno klasifikiovani. Za razliku od bagginga
+tezine primera se menjaju kroz iteracije. Ideja boostinga je da kombinuje niz slabih klasifikatora
+sa ciljem da proizvede jedan jak ansambl. Slab klasifikator je model koji radi bolje od slucajnog
+pogadjanja na svim distribucijama podataka. Ada boosting tezine primera se menjaju u zavisnosti
+od toga kako ih je klasifikator klasifikao : Tacno klasifikovan tezina se smanjuje,
+pogresno klasifikovan tezina se povecava. Kao rezultat dobijamo niz klasifikatora koji su
+komplementarni jedan sa drugim. Ako greska modela prelazi 0.5 model se odbacuje. Prednosti
+ada boostinga: brz i lak za implementaciju, primenljiv na razlicite skupove podataka.
+Mane : ako su modeli previse kompleksni sklon je overfitingu, ako modeli imaju veliku gresku
+sklon je undefitingu. Ima problem sa sumom u podacima. 
+
+Random forest ansambl metod specijalno
+dizajniran za rad sa stablima odlucivanja, ovaj metod ima veliki broj stabala. Svako stablo
+se obucava na obucavajucem skupu dobijenom uzorkovanjem originalnog skupa kao kod bagginga.
+Svako stablo se kreira bez orezivanja. Ako imamo M atributa, biramo m tako da bude m<<M
+i m se bira slucajno i zatim se od m atributa trazi najbolja podela. m se ne menja tokom
+izvrsavanja celog RF algoritma. Ako je m=M onda je RF isto sto i Bagging. Dobra tacnost RF
+algoritma i nema overfittinga, brz algoritam, moze se paralelno obucavati, samo jedan parametar
+za podesavanje m, dobar algoritam za rad sa visoko dimenzionim obucavajucim skupom.
+
+-----------------------------------------------------------------------------
+
+Asocijativna analiza, nenadgledana, trazimo paterne u podacima, nemam target feature.
+Sluzi za razne preporuke. Kreira se matrica : Kolone su itemi a redovi su transakcije.
+Matrica je retka. Retke matrice ne beleze 0 da bi bile efikasne. Support(potpora) za item je procenat
+u koliko transakcija se pojavljuje. Confidence "ako kupim item a i b koja je verovatnoca da cu
+kupit i item c", conf((A,B) -> C) = Support(A,B,C) / Support(A,B). Visok confidence je znak
+da je pravilo ucestalo. Potporni broj je fekvencija pojavljivanja skupa atributa. Pretraga
+asocijativnih pravila je takva da se zada min. potpora i min. poverenje i sva pravila koja
+zadovoljavaju taj uslov su rezultat pretrage. Da se ne bi radilo sirovo racunanje koristi se Aprirori princip.
+Apriori princip : Ako je skup frekventan tada i svi njegovi podskupovi moraju da budu frekventni.
+Potpora skupa nikada ne prelazi potporu njegovih podskupova. Aprirori koristi generisi
+i testiraj pristup - generise kandidate skupove artikala i testira da li su frekventni
+generisanje kandidata je zahtevno kao i testiranje frekventnosti. Smanjenjem praga potpore se 
+dobija veci broj frekventnih skupova artikala. Povecanjem broja transakcija ili dimenzionalnosti
+raste i vreme pretrage asocijativnih pravila. 
+
+FP growth proizvodi frekventne skupove artikala bez generisanja kandidata. Sastoji se od dva koraka : 
+1) Kreira se kompaktna struktura koja se naziva FP Stablo
+2) Izdvajaju se frekventni skupovi artikala direktno iz FP stabla
+Prednosti FP Growth algoritma:
+1) Samo dva prolaza kroz skup podataka
+2) Manji prostorni zahtevi
+3) Nema generisanja kandidata pa brojanja
+3) Mnogo brzi od aprirori algoritma
+Mane :
+1) FP stablo moze da bude memorijski zahtevno
+2) Za velike skupove kreiranje FP stabla je zahtevno
+Tabela kontigencije(Slucajnost, neizvesnost, mogucnost da nesto bude drugacije) se
+koristi za definisanje razlicith mera : potpora, poverenje, lift, gini...
+Postoji mnogo mera za odredjivanje interesantnosti pravila.
+Lift pravila tumaci se kao odnos potpore dobijene na osnovu podataka i ocekivane potpore ako
+X i Y ne zaivse jedan od drugog. Ako je lift = 1 znaci da su X i Y nezavisni, ako je lift > 1
+to znaci da je verovatno da ako je kupio X da ce kupiti i Y. Ako je lift < 1 to znaci da je 
+verovatno da ako je kupio X nece kupiti Y.
+Conviction je mera za pravila koja ako je manja od 1 govori da je verovatnije da ako je neko 
+kupio X nece kupit Y i obratno.
+
+-----------------------------------------------------------------------------
+
+Regresiona analiza se koristi za predikciju zavisne promenljive na osnovu veze sa najmanje
+jednom nezavisno promenljivo. Kod linearne regresija veza izmedju zavisne i nezavisne promenljive
+je opisana linearnom funkcijom. Regresija nije deterministicka matematicka jednacina. Ona je 
+relacija ponasanja koja je podlozna slucajnosti. Tipovi realcija : Jake (Margina je mala)
+i slabe(Margina je velika) i bez relacije(za promenu X-a Y se ne menja). Statisticki model
+razdvaja vezu izmedju promenljivih na sistematicnu i slucajnu komponentu. 
+Pretpostavke regresionog modela :
+1) Veza izmedju X i Y je linearna
+2) Vrednosti promenljive X su zadate, jedina slucajnost za vrednosti Y potice od greske
+3) Vrednosti greske su medjusobno nezavisne i normalno su distribuirane oko srednje vrednosti.
+4) Konstantna varijansa greske
+Estimacija regresije se vrsi tako da se minimizuje suma kvadrata razlika.
+Ukpna varijabilnost se vidi kada se posmatra varijabilnost Y. Varijabilnost greske se vidi
+kada se posmatra uz regresionu pravu. Koeficijent determinacije je deo ukupne varijacije zavisne
+promenljive koji se objasnjava varijacijom nezavisne promenljive R^2. (Sto blize 1 to bolje!)
+(72% varijailnosti cena kuce se moze objasniti ako se zna povrsina placa). Standardna greska
+nam kaze koliko tipicno gresimo ako koristimo dobijenu regresionu jednacinu. Greska je u jedinicama
+Y promenljive. 
+Provera adekvatnosti estimiranog modela se vrsi pomocu reziduala (razlika izmedju stvarne i estimirane
+vrednosti tacaka). Vrsi se provera pretpostavki na linearnost, konstantnu varijansu, normalnu
+distribuciju i statisticku nezavisnost. Za proveru normalne raspodele gresaka se koristi
+normal probability plot i podaci imaju normalnu raspodelu ako ne odstupaju mnogo od prave linije.
+Rasudjivanje o estimiranim parametrima : t-test za nagib populacije, da li postoji linearna veza
+izmedju zavisne i nezavisne promenljive? t-test je statiscticki test, zakljucuje na osnovu dostupnih
+podataka, za dobijeni rezultat se kaze da je statisticki znacajan ako je malo verovatno da je dobijen
+na sasvim slucajan nacin. Moramo da imamo hipotezu koju cemo koristiti, pomocu statistike odredjuje
+se p-vrednost. p-vrednost je verovatnoca da ce test statistika imati vrednost koju smo dobili iz podataka
+ako je hipoteza koju testiramo tacna. Vrednost od 0.05 znaci da postoji 5% sansi da ce hipoteza biti tacna.
+Za jednostruku regresiju F-test i t-test imaju istu funkciju. Za visestruku regresiju to nije slucaj.
+f-test i t-test koristimo da bi smo uocili zavisnost medju promenljivima, kad pronadjemo promenljivu
+koja nema zavisnost izbacimo je iz skupa. Zamke regresione analize :
+1) Nedovoljna svest o pretpostavkama za primenu regresije najmanjih kvadrata
+2) Neznanje o tome kako oceniti da li su pretpostavke zadovoljene
+3) Nepoznavanje alternativa regresiji najmanjih kvadrata
+4) Koriscenje regresionog modela bez znanja u oblasti u kojoj se primenjuje
+5) Eskploatacija izvan relevantnog opsega
+Strategije:
+1) Zapoceti sa dijagramom da bi se vizualizovalo
+2) Izvrsiti analizu reziduala
+3) Ako je bilo koja pretpostavka narusena koristiti alternativne metode
+4) Konstruisati intervale poverenja
+5) Izbegavati predikciju izvan relevantnog opsega
+
+-----------------------------------------------------------------------------
+
+Idjea visestruke regresije je da se ispita veza izmedju jedne zavisne varijable Y i dveju ili
+vise nezavisnih varijabli Xi. r^2 kod visestruke regresije raste kako povecavamo broj varijabli
+i to nije dobro za poredjenje modela te se zato koristi r^2 modifikovani. Fiktivna varijabla je
+kategorijalna eskplanatorna varijabla sa dve vrednosti. Pretpostavke visestruke regresije :
+1) Greske imaju normalnu raspodelu
+2) Greske imaju konstantnu varijansu
+3) Greske modela su nezavisne
+Da li je ukupan model znacajan nam kaze F-test, pokazuje da li postoji zavisnost izmedju svih X
+varijabli posmatranih zajedno sa Y.
